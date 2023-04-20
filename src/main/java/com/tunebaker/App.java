@@ -1,5 +1,9 @@
 package com.tunebaker;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 public class App {
     private Client client;
     private ConsoleEventLogger eventLogger;
@@ -10,10 +14,11 @@ public class App {
     }
 
     public static void main(String[] args) {
-        app.client = new Client("1", "John Smith");
-        app.eventLogger = new ConsoleEventLogger();
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/camel-context.xml");
+        App app = context.getBean("app", App.class);
+        /*app.logEvent("Some message for user 1");
+        app.logEvent("Some message for user 2");*/
 
-        app.logEvent("Some message for user 1");
     }
 
     private void logEvent(String msg){

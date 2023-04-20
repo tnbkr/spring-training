@@ -36,8 +36,20 @@
     </bean>
 
 
-<bean id="eventLogger" class="com.tunebaker.ConsoleEventLogger"/>
+    <bean id="eventLogger" class="com.tunebaker.ConsoleEventLogger"/>
 
-<bean id="app" class="com.tunebaker.App"/>
+    <bean id="app" class="com.tunebaker.App">
+        <constructor-arg ref="eventLogger"/>
+        <constructor-arg ref="client"/>
+    </bean>
 
-        </beans>
+    <bean id="event" class="com.tunebaker.Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
+
+</beans>
